@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { FlatList, Text, View, StyleSheet, Image } from 'react-native';
+import { fetchPictures } from '../actions';
 
 class PictureFeed extends Component {
 
+	componentWillMount() {
+		console.log('CWM');
+		const { fetchPictures, page } = this.props;
+		
+		fetchPictures();
+	}
 
-	renderItem({item}) {
+	renderItem({ item }) {
 		const { image_url, name, user } = item;
-		const { userpic_url, username } = user;
+		const { userpic_url, fullname } = user;
 		const { headerText, image, headerContent, avatar, avatarContainer, container, card } = styles;
 
 		return (
@@ -20,28 +28,28 @@ class PictureFeed extends Component {
 					</View>
 					<View style={headerContent}>
 						<Text style={headerText}>{name}</Text>
-						<Text>{`by ${username}`}</Text>
+						<Text>{`by ${fullname}`}</Text>
 					</View>
 				</View>
 
 				<View style={container}>
 					<Image 
 						style={image}
-						source={{ uri: image_url}}
+						source={{ uri: image_url }}
 					/>
 				</View>
 			</View>
-		)
+		);
 	}
 
 	render() {
-		return(
+		return (
 			<FlatList 
-				data={data}
-				keyExtractor={item => item.id}
+				data={this.props.pictures}
+				keyExtractor={picture => picture.id}
 				renderItem={this.renderItem}
 			/>
-		)
+		);
 	}
 }
 
@@ -73,9 +81,9 @@ const styles = StyleSheet.create({
 		fontSize: 18
 	},
   image: {
-  	height: 300,
-  	flex: 1,
-  	width: null
+		height: 300,
+		flex: 1,
+		width: null
   },
   avatarContainer: {
 		justifyContent: 'center',
@@ -84,95 +92,20 @@ const styles = StyleSheet.create({
 		marginRight: 10
 	},
   avatar: {
-  	height: 50,
-  	width: 50,
-  	borderRadius: 30
+		height: 50,
+		width: 50,
+		borderRadius: 30
   }
 });
 
 
-const data = [
-	{ "id": 215312191,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 15406737,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",	
-	},
-	{ "id": 215312192,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 15406737,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",	
-	},
-	{ "id": 215312193,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 15406737,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",	
-	},
-	{ "id": 215312194,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 15406737,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",	
-	},
-	{ "id": 215312195,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 15406737,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},	
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",
-	},
-	{ "id": 215312196,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 1540673,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",	
-	},
-	{ "id": 215312197,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 15406737,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},	
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",
-	},
-	{ "id": 215312198,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 15406737,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",	
-	},
-	{ "id": 215312199,
-		"name": "Denver International Airport",
-		"user": {
-			"id": 15406737,
-			"username": "dburdeny",
-			"userpic_url": "https://pacdn.500px.org/15406737/756444921d1e18b9206010485febc8e899c7ef6f/1.jpg?3",
-		},
-		"image_url": "https://drscdn.500px.org/photo/215312191/q%3D50_w%3D140_h%3D140/1682130b6fddf7a71b469a849113a0b6?v=0",	
-	},
-]
+const mapStateToProps = (state) => {
+	const { data, page, isFetching } = state.pictures;
+	return {
+		pictures: data,
+		page,
+		isFetching
+	};
+};
 
-export default PictureFeed;
+export default connect(mapStateToProps, { fetchPictures })(PictureFeed);
