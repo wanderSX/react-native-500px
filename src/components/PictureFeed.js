@@ -1,106 +1,65 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FlatList, Text, View, StyleSheet, Image } from 'react-native';
+import { FlatList } from 'react-native';
 import { fetchPictures } from '../actions';
+import PictureCard from './PictureCard';
+import ListFooter from './ListFooter';
 
 class PictureFeed extends Component {
 
-	componentWillMount() {
-		console.log('CWM');
-		const { fetchPictures, page } = this.props;
+	constructor(props) {
+		super(props);
 		
-		fetchPictures();
+		this.showPicture = this.showPicture.bind(this);
+		this.renderItem = this.renderItem.bind(this);
+		this.handleFetchMore = this.handleFetchMore.bind(this);
+		this.renderFooter = this.renderFooter.bind(this);
 	}
 
-	renderItem({ item }) {
-		const { image_url, name, user } = item;
-		const { userpic_url, fullname } = user;
-		const { headerText, image, headerContent, avatar, avatarContainer, container, card } = styles;
-
-		return (
-			<View style={card}>
-				<View style={container}>
-					<View style={avatarContainer}>
-						<Image 
-							style={avatar}
-							source={{ uri: userpic_url }}
-						/>
-					</View>
-					<View style={headerContent}>
-						<Text style={headerText}>{name}</Text>
-						<Text>{`by ${fullname}`}</Text>
-					</View>
-				</View>
-
-				<View style={container}>
-					<Image 
-						style={image}
-						source={{ uri: image_url }}
-					/>
-				</View>
-			</View>
-		);
+	componentWillMount() {
+		this.props.fetchPictures();
 	}
+
+	handleFetchMore() {
+		this.props.fetchPictures(this.props.page + 1);
+	}
+
+	showPicture(picture) {
+		const { navigate } = this.props.navigation;
+		navigate('Picture', { picture });
+	}
+
+
+	renderItem({ item }) { 
+		return <PictureCard item={item} onPress={this.showPicture} />;
+	}
+
+	renderFooter() {
+    if (!this.props.isFetching) return null;
+
+    return <ListFooter />;
+  }
 
 	render() {
+			console.log(this.props.pictures.length);
 		return (
 			<FlatList 
 				data={this.props.pictures}
 				keyExtractor={picture => picture.id}
 				renderItem={this.renderItem}
+				onEndReached={this.handleFetchMore}
+				onEndReachedThreshold={1}
+				removeClippedSubviews={true}
+				ListFooterComponent={this.renderFooter}
 			/>
 		);
 	}
 }
 
-const styles = StyleSheet.create({
-	card: {
-		borderWidth: 1,
-		borderRadius: 2,
-		borderColor: '#ddd',
-		borderBottomWidth: 0,
-		elevation: 1,
-		marginLeft: 5,
-		marginRight: 5,
-		marginTop: 10
-	},
-  container: {
-		borderBottomWidth: 1,
-		padding: 5,
-		backgroundColor: '#fff',
-		justifyContent: 'flex-start',
-		flexDirection: 'row',
-		position: 'relative',
-		borderColor: '#ddd'
-	},
-  headerContent: {
-		flexDirection: 'column',
-		justifyContent: 'space-around'
-	},
-	headerText: {
-		fontSize: 18
-	},
-  image: {
-		height: 300,
-		flex: 1,
-		width: null
-  },
-  avatarContainer: {
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginLeft: 10,
-		marginRight: 10
-	},
-  avatar: {
-		height: 50,
-		width: 50,
-		borderRadius: 30
-  }
-});
-
 
 const mapStateToProps = (state) => {
 	const { data, page, isFetching } = state.pictures;
+
 	return {
 		pictures: data,
 		page,

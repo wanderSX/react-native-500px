@@ -30,7 +30,8 @@ export const fetchPictures = (page = 1) => {
 			})
 			.catch((error) => {
 				console.log('error');
-				dispatch(fetchPicturesFail(error));
+				dispatch(fetchPicturesFail(error.data));
 			});
 	};
 };
+
