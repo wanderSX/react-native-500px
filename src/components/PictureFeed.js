@@ -41,7 +41,6 @@ class PictureFeed extends Component {
   }
 
 	render() {
-			console.log(this.props.pictures.length);
 		return (
 			<FlatList 
 				data={this.props.pictures}

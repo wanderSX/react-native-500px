@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
 		fontSize: 18
 	},
 	imageContainer: {
-    //backgroundColor: '#000',
     justifyContent: 'center',
     position: 'relative'
 	},
