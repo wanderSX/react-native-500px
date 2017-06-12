@@ -13,12 +13,13 @@ componentWillMount() {
 }
 
 	render() {
-		const { image_url } = this.props.navigation.state.params.picture;
+		const { url } = this.props.navigation.state.params.picture.images[1];
 		return (
 			<View style={styles.container}>
 					<Image 
 						style={styles.image}
-						source={{ uri: image_url }}
+						source={{ uri: url }}
+						resizeMode="contain"
 
 					/>
 			</View>
@@ -36,8 +37,9 @@ const styles = StyleSheet.create({
 	image: {
 		flex: 1,
 		alignSelf: 'stretch',
+		height: null,
 		width: null,
-		backgroundColor: '#fff',
+		backgroundColor: '#000',
 	}
 });	
 

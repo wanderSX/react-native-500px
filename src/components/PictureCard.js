@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, Image, TouchableWithoutFeedback } from 'react-n
 class PictureCard extends Component {
 	render() {
 		const { item, onPress } = this.props;
-		const { image_url, name, user } = item;
+		const { name, user, images } = item; 
 		const { userpic_url, fullname } = user;
 		const { headerText, image, headerContent, avatar, avatarContainer, container, card, imageContainer } = styles;
 
@@ -30,7 +30,7 @@ class PictureCard extends Component {
 						<Image 
 							style={image}
 							resizeMode='stretch'
-							source={{ uri: image_url }}
+							source={{ uri: images[0].url }}
 							aspectRatio={1}
 							resizeMode='contain'
 						/>
