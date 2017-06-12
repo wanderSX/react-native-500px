@@ -21,14 +21,19 @@ const AppNavigator = StackNavigator({
   Picture: {
     screen: Picture,
     navigationOptions: {
-      title: 'Photo',
+      title: '',
       headerTitleStyle: {
         color: '#fff',
         alignSelf: 'center'
       },
       headerStyle: {
-        marginTop: 23,
-      }
+        position: 'absolute',
+        top: 23,
+        left: 0,
+        right: 0,
+        backgroundColor: 'transparent',
+      },
+      headerTintColor: '#fff'
     }
   }
 }, { headerMode: 'screen' });

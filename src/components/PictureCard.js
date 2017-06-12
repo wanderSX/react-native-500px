@@ -6,7 +6,16 @@ class PictureCard extends Component {
 		const { item, onPress } = this.props;
 		const { name, user, images } = item; 
 		const { userpic_url, fullname } = user;
-		const { headerText, image, headerContent, avatar, avatarContainer, container, card, imageContainer } = styles;
+		const { 
+			headerText, 
+			image, 
+			headerContent, 
+			avatar, 
+			avatarContainer, 
+			container, 
+			card, 
+			imageContainer 
+		} = styles;
 
 		return (
 			<View style={card}>
@@ -29,10 +38,9 @@ class PictureCard extends Component {
 					<View style={[container, imageContainer]}>
 						<Image 
 							style={image}
-							resizeMode='stretch'
 							source={{ uri: images[0].url }}
-							aspectRatio={1}
 							resizeMode='contain'
+							//aspectRation={1}
 						/>
 					</View>
 				</TouchableWithoutFeedback>
@@ -69,12 +77,14 @@ const styles = StyleSheet.create({
 		fontSize: 18
 	},
 	imageContainer: {
-    justifyContent: 'center',
-    position: 'relative'
+    flexDirection: 'column',
+    position: 'relative',
 	},
   image: {
-		height: 140,
-		width: 140
+		flex: 1,
+		width: null,
+		height: 280,
+
   },
   avatarContainer: {
 		justifyContent: 'center',
