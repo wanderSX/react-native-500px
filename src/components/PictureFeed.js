@@ -44,12 +44,13 @@ class PictureFeed extends Component {
 		return (
 			<FlatList 
 				data={this.props.pictures}
-				keyExtractor={picture => picture.id}
+				keyExtractor={(picture, index) => picture.id}
 				renderItem={this.renderItem}
 				onEndReached={this.handleFetchMore}
 				onEndReachedThreshold={1}
-				removeClippedSubviews={true}
-				ListFooterComponent={this.renderFooter}
+				refreshing={this.props.isFetching}
+				//removeClippedSubviews={true}
+				//ListFooterComponent={this.renderFooter}
 			/>
 		);
 	}
